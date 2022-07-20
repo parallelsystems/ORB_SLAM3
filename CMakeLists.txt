@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(ORB_SLAM3)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 IF(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE Release)
@@ -30,9 +32,9 @@ endif()
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV 4.4)
+find_package(OpenCV 4.2)
    if(NOT OpenCV_FOUND)
-      message(FATAL_ERROR "OpenCV > 4.4 not found.")
+      message(FATAL_ERROR "OpenCV > 4.2 not found.")
    endif()
 
 MESSAGE("OPENCV VERSION:")
@@ -188,6 +190,10 @@ endif()
 
 #Monocular examples
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/Examples/Monocular)
+
+add_executable(mono_orbslam
+        Examples/Monocular/mono_orbslam.cc)
+target_link_libraries(mono_orbslam ${PROJECT_NAME})
 
 add_executable(mono_tum
         Examples/Monocular/mono_tum.cc)
