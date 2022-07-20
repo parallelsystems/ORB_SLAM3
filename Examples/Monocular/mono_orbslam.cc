@@ -33,14 +33,14 @@ void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames,
 
 int main(int argc, char **argv)
 {
-    if(argc != 3)
+    if(argc != 2)
     {
-        cerr << endl << "Usage: ./mono_orbslam path_to_settings path_to_sequence" << endl;
+        cerr << endl << "Usage: ./mono_orbslam path_to_sequence" << endl;
         return 1;
     }
+    string path_to_sequence = argv[1];
     string path_to_vocabulary = "/tmp/ORBvoc.txt";
-    string path_to_settings = argv[1];
-    string path_to_sequence = argv[2];
+    string path_to_settings = path_to_sequence + "/settings.yaml";
 
     // Retrieve paths to images
     vector<string> vstrImageFilenames;
@@ -151,7 +151,8 @@ int main(int argc, char **argv)
     cout << "mean tracking time: " << totaltime/nImages << endl;
 
     // Save camera trajectory
-    SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");    
+    SLAM.SaveTrajectoryKITTI(path_to_sequence + "/CameraTrajectory.txt");
+    // SLAM.SaveKeyFrameTrajectoryTUM(path_to_sequence + "/KeyFrameTrajectory.txt");    
 
     return 0;
 }
